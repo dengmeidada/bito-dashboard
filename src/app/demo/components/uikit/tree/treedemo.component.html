@@ -1,0 +1,236 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h5>產品與服務類型管理</h5>
+      <p-dialog
+        header="新增/編輯"
+        [(visible)]="display"
+        [modal]="true"
+        showEffect="fade"
+        [style]="{ width: '90vw' }"
+        [breakpoints]="{ '960px': '75vw' }"
+      >
+        <div class="grid formgrid">
+          <div class="col-12 mt-4 mb-2">
+            <h6>*產品與服務類型</h6>
+            <input
+              type="text"
+              pInputText
+              placeholder="請填寫產品與服務類型"
+              style="width: 100%"
+              [(ngModel)]="name"
+            />
+          </div>
+        </div>
+        <!-- <div class="grid formgrid">
+          <div class="col-12 mt-4 mb-2">
+            <h6>角色設定</h6>
+            <div class="b-assign-box" *ngFor="let role of roleList">
+              <span class="mx-4">{{ role.roleName }}權限</span>
+              <p-inputSwitch
+                (onChange)="updateCheckboxValue(role)"
+              ></p-inputSwitch>
+            </div>
+          </div>
+        </div> -->
+        <ng-template pTemplate="footer">
+          <button
+            pButton
+            (click)="display = false"
+            label="離開"
+            class="p-button-outlined"
+          ></button>
+          <button pButton (click)="submit()" label="確定送出"></button>
+        </ng-template>
+      </p-dialog>
+
+      <div class="text-right mb-4">
+        <button
+          (click)="display = true"
+          pButton
+          icon="pi pi-plus"
+          label="新增"
+          style="width: auto"
+        ></button>
+      </div>
+      <p-table
+        #dt1
+        [value]="list"
+        [paginator]="true"
+        [rows]="5"
+        responsiveLayout="scroll"
+        [globalFilterFields]="['name', 'id']"
+        #optionsContainer
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pColumn="name">參數名稱</th>
+            <th>啟用</th>
+            <th>操作</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>
+              <p-inputSwitch
+                (onChange)="updateCheckboxValue(rowIndex)"
+              ></p-inputSwitch>
+            </td>
+            <td style="width: 15%">
+              <div class="flex justify-content-between align-items-center mb-5">
+                <div>
+                  <button
+                    pButton
+                    type="button"
+                    icon="pi pi-ellipsis-v"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="menu.toggle($event)"
+                  ></button>
+                  <p-menu
+                    #menu
+                    [popup]="true"
+                    [model]="items"
+                    [appendTo]="optionsContainer"
+                  ></p-menu>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <p-toast></p-toast>
+</div>
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h5>影音社群類型管理</h5>
+      <p-dialog
+        header="新增/編輯"
+        [(visible)]="display2"
+        [modal]="true"
+        showEffect="fade"
+        [style]="{ width: '90vw' }"
+        [breakpoints]="{ '960px': '75vw' }"
+      >
+        <div class="grid formgrid">
+          <div class="col-12 mt-4 mb-2">
+            <h6>*影音社群類型</h6>
+            <input
+              type="text"
+              pInputText
+              placeholder="請填寫影音社群類型"
+              style="width: 100%"
+              [(ngModel)]="name"
+            />
+          </div>
+        </div>
+        <ng-template pTemplate="footer">
+          <button
+            pButton
+            (click)="display2 = false"
+            label="離開"
+            class="p-button-outlined"
+          ></button>
+          <button pButton (click)="display2 = false" label="確定送出"></button>
+        </ng-template>
+      </p-dialog>
+
+      <div class="text-right mb-4">
+        <button
+          (click)="display2 = true"
+          pButton
+          icon="pi pi-plus"
+          label="新增"
+          style="width: auto"
+        ></button>
+      </div>
+      <p-table
+        #dt2
+        [value]="list2"
+        [paginator]="true"
+        [rows]="5"
+        responsiveLayout="scroll"
+        [globalFilterFields]="['name', 'id']"
+        #optionsContainer
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pColumn="name">參數名稱</th>
+            <th>啟用</th>
+            <th>操作</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>
+              <p-inputSwitch
+                (onChange)="updateCheckboxValue(rowIndex)"
+              ></p-inputSwitch>
+            </td>
+            <td style="width: 15%">
+              <div class="flex justify-content-between align-items-center mb-5">
+                <div>
+                  <button
+                    pButton
+                    type="button"
+                    icon="pi pi-ellipsis-v"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="menu.toggle($event)"
+                  ></button>
+                  <p-menu
+                    #menu
+                    [popup]="true"
+                    [model]="items2"
+                    [appendTo]="optionsContainer"
+                  ></p-menu>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <p-toast></p-toast>
+</div>
+<!-- <div class="grid">
+	<div class="col-12">
+		<div class="card">
+			<h5>Tree</h5>
+			<p-tree [value]="files1" selectionMode="checkbox" [(selection)]="selectedFiles1"></p-tree>
+		</div>
+	</div>
+	<div class="col-12">
+		<div class="card">
+			<h5>TreeTable</h5>
+			<p-treeTable [value]="files2" [columns]="cols" selectionMode="checkbox" [(selection)]="selectedFiles2">
+				<ng-template pTemplate="header" let-columns>
+					<tr>
+						<th *ngFor="let col of columns">
+							{{col.header}}
+						</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+					<tr>
+						<td *ngFor="let col of columns; let i = index">
+							<p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+							<p-treeTableCheckbox [value]="rowNode" *ngIf="i == 0"></p-treeTableCheckbox>
+							{{rowData[col.field]}}
+						</td>
+					</tr>
+				</ng-template>
+			</p-treeTable>
+		</div>
+	</div>
+	<div class="col-12">
+		<div class="card">
+			<h5>Horizontal Tree</h5>
+			<p-tree [value]="files3" layout="horizontal" selectionMode="single" [(selection)]="selectedFiles3"></p-tree>
+		</div>
+	</div>
+</div> -->

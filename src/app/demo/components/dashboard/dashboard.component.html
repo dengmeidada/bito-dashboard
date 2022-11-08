@@ -1,0 +1,145 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h5>角色權限管理</h5>
+      <p-dialog
+        header="新增/編輯"
+        [(visible)]="display"
+        [modal]="true"
+        showEffect="fade"
+        [style]="{ width: '90vw' }"
+        [breakpoints]="{ '960px': '75vw' }"
+      >
+        <div class="grid formgrid">
+          <div class="col-12 mb-2 md:col-6 lg:mb-0">
+            <h6>姓名</h6>
+            <input
+              type="text"
+              pInputText
+              placeholder="請填寫姓名"
+              style="width: 100%"
+              [(ngModel)]="name"
+            />
+          </div>
+          <div class="col-12 mb-2 md:col-6 lg:mb-0">
+            <h6>員編</h6>
+            <input
+              type="text"
+              pInputText
+              placeholder="請填寫員編"
+              style="width: 100%"
+              [(ngModel)]="staffCode"
+            />
+          </div>
+        </div>
+        <div class="grid formgrid">
+          <div class="col-12 mt-4 mb-2">
+            <h6>Email</h6>
+            <input
+              type="text"
+              pInputText
+              placeholder="請填寫Email"
+              style="width: 100%"
+              [(ngModel)]="name"
+            />
+          </div>
+        </div>
+        <div class="grid formgrid">
+          <div class="col-12 mt-4 mb-2">
+            <h6>角色設定</h6>
+            <div class="b-assign-box" *ngFor="let role of roleList">
+              <span class="mx-4">{{ role.roleName }}權限</span>
+              <p-inputSwitch
+                (onChange)="updateCheckboxValue(role)"
+              ></p-inputSwitch>
+            </div>
+          </div>
+        </div>
+        <ng-template pTemplate="footer">
+          <button
+            pButton
+            (click)="display = false"
+            label="離開"
+            class="p-button-outlined"
+          ></button>
+          <button pButton (click)="submit()" label="確定送出"></button>
+        </ng-template>
+      </p-dialog>
+      <p-table
+        #dt1
+        [value]="list"
+        [paginator]="true"
+        [rows]="5"
+        responsiveLayout="scroll"
+        [globalFilterFields]="['name', 'id']"
+        #optionsContainer
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex justify-content-between flex-column sm:flex-row">
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                #filter
+                (input)="onGlobalFilter(dt1, $event)"
+                placeholder="姓名、員編"
+                class="p-inputtext p-component p-element w-full"
+              />
+            </span>
+            <button
+              (click)="display = true"
+              pButton
+              icon="pi pi-plus"
+              label="新增使用者"
+              style="width: auto"
+            ></button>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>序號</th>
+            <th pColumn="name">姓名</th>
+            <th pColumn="id">員工編號</th>
+            <th pColumn="email">信箱</th>
+            <th pColumn="permission">角色</th>
+            <th>操作</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+          <tr>
+            <td>
+              {{ rowIndex + 1 }}
+            </td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.id }}</td>
+            <td>{{ product.email }}</td>
+            <td>
+              {{ product.permission }}
+            </td>
+            <td style="width: 15%">
+              <div class="flex justify-content-between align-items-center mb-5">
+                <div>
+                  <button
+                    pButton
+                    type="button"
+                    icon="pi pi-ellipsis-v"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="menu.toggle($event)"
+                  ></button>
+                  <p-menu
+                    #menu
+                    [popup]="true"
+                    [model]="items"
+                    [appendTo]="optionsContainer"
+                  ></p-menu>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <p-toast></p-toast>
+</div>

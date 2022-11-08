@@ -1,0 +1,199 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h5>首頁內容管理</h5>
+      <p-dialog
+        header="新增/編輯"
+        [(visible)]="display"
+        [modal]="true"
+        showEffect="fade"
+        [style]="{ width: '90vw' }"
+        [breakpoints]="{ '960px': '75vw' }"
+      >
+        <div class="grid formgrid">
+          <div class="col-12 mb-2">
+            <h6>首頁區塊</h6>
+            <p-dropdown
+              [options]="blockOptions"
+              [(ngModel)]="selectedBlock"
+              [showClear]="false"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="grid formgrid">
+          <div class="col-12 mt-4 mb-2 lg:col-4 lg:mb-0">
+            <h6>文章分類</h6>
+            <p-dropdown
+              [options]="cities"
+              [(ngModel)]="selectedDrop"
+              placeholder="請選擇文章分類"
+              [showClear]="true"
+            ></p-dropdown>
+          </div>
+          <div
+            class="col-12 mt-4 mb-2 lg:col-4 lg:mb-0"
+            *ngIf="selectedBlock === '1'"
+          >
+            <h6>產品分類</h6>
+            <p-dropdown
+              [options]="productOptions"
+              [(ngModel)]="selectedProduct"
+              placeholder="請選擇產品分類"
+              [showClear]="false"
+            ></p-dropdown>
+          </div>
+        </div>
+
+        <div class="grid formgrid">
+          <div class="col-12 mt-4 mb-2">
+            <h6>標題</h6>
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="title"
+              placeholder="請填寫標題"
+              style="width: 100%"
+            />
+          </div>
+        </div>
+
+        <h6>文章內容</h6>
+        <ckeditor
+          [editor]="Editor"
+          [(ngModel)]="htmlData"
+          [config]="{
+            toolbar: {
+              items: toolbarConfig
+            }
+          }"
+        ></ckeditor>
+        <h6>上傳檔案</h6>
+        <p-fileUpload
+          #fileUploadData
+          name="demo[]"
+          (onSelect)="onFileUploadClicked($event)"
+          [multiple]="false"
+          accept="image/*"
+          [maxFileSize]="1000000"
+          [chooseLabel]="'選擇檔案'"
+          [showUploadButton]="false"
+          [showCancelButton]="false"
+        >
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+              <li *ngFor="let file of uploadedFiles">
+                {{ file.name }} - {{ file.size }} bytes
+              </li>
+            </ul>
+          </ng-template>
+          <ng-template pTemplate="content">
+            <div class="dragdrop-area" *ngIf="!isSelectFileUpload">
+              <img [src]="imageSrc" />
+              {{ fileName }} {{ fileSize }}
+            </div>
+          </ng-template>
+        </p-fileUpload>
+        <!-- <img [src]="imageSrc" alt="" srcset="" /> -->
+        <div class="grid formgrid">
+          <div class="col-3 mt-4 mb-2">
+            <h6>排序(數字, 小到大排序)</h6>
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="sortOrderValue"
+              placeholder="請填寫排序"
+              style="width: 100%"
+            />
+          </div>
+        </div>
+        <ng-template pTemplate="footer">
+          <div class="mt-4">
+            <button
+              pButton
+              (click)="display = false; resetData()"
+              label="離開"
+              class="p-button-outlined"
+            ></button>
+            <button pButton (click)="submit()" label="確定送出"></button>
+          </div>
+        </ng-template>
+      </p-dialog>
+      <p-dataView
+        #dv
+        [value]="selectTableType === '1' ? productList : investList"
+        [paginator]="true"
+        [rows]="9"
+        filterBy="name"
+        layout="list"
+      >
+        <ng-template pTemplate="header">
+          <div
+            class="grid grid-nogutter flex-column md:flex-row justify-content-between"
+          >
+            <p-dropdown
+              [options]="blockOptions"
+              placeholder="請選擇首頁區塊類別"
+              [(ngModel)]="selectTableType"
+              (onChange)="onBlockChange($event)"
+            ></p-dropdown>
+            <span class="p-input-icon-left mb-2 md:mb-0">
+              <i class="pi pi-search"></i>
+              <input
+                type="search"
+                pInputText
+                placeholder="請輸入標題"
+                (input)="onFilter(dv, $event)"
+              />
+            </span>
+            <button
+              (click)="onAdd()"
+              pButton
+              icon="pi pi-plus"
+              label="新增"
+              style="width: auto"
+            ></button>
+          </div>
+        </ng-template>
+
+        <ng-template let-product pTemplate="listItem" let-rowIndex="rowIndex">
+          <div class="col-12">
+            <div
+              class="flex flex-column md:flex-row align-items-center p-3 w-full"
+            >
+              <img
+                [src]="product.file.image"
+                [alt]="product.name"
+                class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5"
+              />
+              <div class="flex-1 text-center md:text-left">
+                <div class="mb-3">{{ product.createdTime }}</div>
+                <div class="font-bold text-2xl">{{ product.name }}</div>
+              </div>
+              <div
+                class="flex flex-row justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0"
+              >
+                <button
+                  type="text"
+                  (click)="onDelete(rowIndex)"
+                  pButton
+                  icon="pi pi-trash"
+                  label="刪除"
+                  class="p-button-danger"
+                  style="width: auto; margin-right: 0.5rem"
+                ></button>
+                <button
+                  type="text"
+                  (click)="onEdit(product, rowIndex)"
+                  pButton
+                  icon="pi pi-pencil"
+                  label="編輯"
+                  style="width: auto"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataView>
+    </div>
+  </div>
+</div>

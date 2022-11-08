@@ -1,0 +1,51 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { PanelsDemoComponent } from './panelsdemo.component';
+import { PanelsDemoRoutingModule } from './panelsdemo-routing.module';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { AccordionModule } from 'primeng/accordion';
+import { TabViewModule } from 'primeng/tabview';
+import { FieldsetModule } from 'primeng/fieldset';
+import { MenuModule } from 'primeng/menu';
+import { InputTextModule } from 'primeng/inputtext';
+import { DividerModule } from 'primeng/divider';
+import { SplitterModule } from 'primeng/splitter';
+import { PanelModule } from 'primeng/panel';
+import { DataViewModule } from 'primeng/dataview';
+import { DropdownModule } from 'primeng/dropdown';
+import { RatingModule } from 'primeng/rating';
+import { DialogModule } from 'primeng/dialog';
+import { FileUploadModule } from 'primeng/fileupload';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    PanelsDemoRoutingModule,
+    ToolbarModule,
+    ButtonModule,
+    RippleModule,
+    SplitButtonModule,
+    AccordionModule,
+    TabViewModule,
+    FieldsetModule,
+    MenuModule,
+    InputTextModule,
+    DividerModule,
+    SplitterModule,
+    PanelModule,
+    DataViewModule,
+    DropdownModule,
+    RatingModule,
+    DialogModule,
+    FileUploadModule,
+    CKEditorModule,
+  ],
+  declarations: [PanelsDemoComponent],
+})
+export class PanelsDemoModule {}
