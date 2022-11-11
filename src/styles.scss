@@ -14,3 +14,22 @@ $gutter: 1rem; //for primeflex grid system
 /* Demos */
 @import "assets/demo/styles/flags/flags.css";
 @import "assets/demo/styles/badges.scss";
+
+.grade-tags {
+  line-height:14px;
+  padding: 10px;
+  border-radius: 50%;
+  color: #fff;
+}
+
+.grade-tags.yellow {
+    background: #F59E0B;
+}
+
+.grade-tags.red {
+  background: #EF4444;
+}
+
+.grade-tags.green {
+  background: #22C55E;
+}

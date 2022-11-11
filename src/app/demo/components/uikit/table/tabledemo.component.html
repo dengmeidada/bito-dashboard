@@ -1,73 +1,255 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <h5>外部連結管理</h5>
+      <h5>已開單案件列表</h5>
       <p-dialog
-        header="新增/編輯"
+        header="案件歷程"
+        [(visible)]="display2"
+        [modal]="true"
+        showEffect="fade"
+        [style]="{ width: '90vw' }"
+        [breakpoints]="{ '960px': '75vw' }"
+        [draggable]="false"
+      >
+        <p-table
+          [value]="externalList"
+          [paginator]="true"
+          [rows]="5"
+          responsiveLayout="scroll"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>最後更新日期、時間</th>
+              <th>進件編號</th>
+              <th>執行動作</th>
+              <th>操作人員</th>
+              <th>上傳附件</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product>
+            <tr>
+              <td>{{ product.name }}</td>
+              <td>{{ product.name }}</td>
+              <td style="width: 30%; min-width: 7rem">{{ product.name }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.name }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+
+        <ng-template pTemplate="footer">
+          <button
+            pButton
+            (click)="display2 = false"
+            label="關閉"
+            class="p-button-outlined"
+          ></button>
+          <!-- <button pButton (click)="submit()" label="確定送出"></button> -->
+        </ng-template>
+      </p-dialog>
+
+      <p-table
+        [value]="list"
+        [paginator]="true"
+        [rows]="5"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>等級</th>
+            <th>進件編號</th>
+            <th pColumn="name">申請部門/人員</th>
+            <th>合約名稱</th>
+            <th>合約類型</th>
+            <th>合約金額新台幣/含稅</th>
+            <th>案件狀態</th>
+            <th>狀態累計</th>
+            <th>歸檔編碼</th>
+            <th>目前負責人</th>
+            <th>歷程</th>
+            <!-- <th>操作</th> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td>
+              <div
+                class="grade-tags"
+                [ngClass]="
+                  product.grade === '特急'
+                    ? 'red'
+                    : product.grade === '急'
+                    ? 'yellow'
+                    : 'green'
+                "
+              >
+                {{ product.grade }}
+              </div>
+            </td>
+            <td>
+              <a
+                href="javascript:;"
+                (click)="
+                  router.navigate([
+                    '/backstage/page/billedCases/basicInformation'
+                  ])
+                "
+                >{{ product.id }}</a
+              >
+            </td>
+            <td>{{ product.department }} | {{ product.name }}</td>
+            <td>{{ product.contractName }}</td>
+            <td>{{ product.contractType }}</td>
+            <td>{{ product.TaxContractAmount }}</td>
+            <td>
+              <a
+                href="javascript:;"
+                (click)="caseStatusClick(product.caseStatus)"
+                >{{ product.caseStatusName }}</a
+              >
+            </td>
+            <td>{{ product.caseDate }}</td>
+            <td>{{ product.archiveCode }}</td>
+            <td>{{ product.principal }}</td>
+            <td>
+              <a href="javascript:;" (click)="display2 = true">
+                {{ product.updateTime }}</a
+              >
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-dialog
+        [header]="dialogTitle"
         [(visible)]="display"
         [modal]="true"
         showEffect="fade"
         [style]="{ width: '90vw' }"
         [breakpoints]="{ '960px': '75vw' }"
+        [draggable]="false"
       >
-        <div class="grid formgrid">
-          <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-            <h6>分類</h6>
-            <p-dropdown
-              [options]="cities"
-              [(ngModel)]="selectedDrop"
-              placeholder="請選擇分類"
-              [showClear]="true"
-            ></p-dropdown>
-          </div>
-          <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-            <h6>類型</h6>
-            <p-dropdown
-              [options]="cities2"
-              [(ngModel)]="selectedDrop2"
-              placeholder="請選擇類型"
-              [showClear]="true"
-            ></p-dropdown>
-          </div>
-        </div>
+        <div class="p-fluid p-formgrid grid">
+          <ng-container *ngIf="caseStatusDialog === '15'">
+            <div
+              class="field col-12 md:col-4"
+              style="display: flex; align-items: center"
+            >
+              <label for class="mb-0">下載最新附件</label>
+              <a href="javascript:;" class="ml-5">test123.pdf</a>
+            </div>
+            <div class="field col-12 md:col-4">
+              <button
+                pButton
+                type="button"
+                icon="pi pi-print"
+                class="p-button-danger"
+              ></button>
+            </div>
+          </ng-container>
 
-        <h6>上傳縮圖</h6>
-        <p-fileUpload
-          name="demo[]"
-          [multiple]="false"
-          accept="image/*"
-          [maxFileSize]="1000000"
-          [chooseLabel]="'選擇檔案'"
-          [showUploadButton]="false"
-          [showCancelButton]="false"
-        >
-          <ng-template pTemplate="content">
-            <ul *ngIf="uploadedFiles.length">
-              <li *ngFor="let file of uploadedFiles">
-                {{ file.name }} - {{ file.size }} bytes
-              </li>
-            </ul>
-          </ng-template>
-        </p-fileUpload>
-        <div class="grid formgrid">
-          <div class="col-12 mt-4 mb-2">
-            <h6>連結</h6>
-            <input
-              type="text"
-              pInputText
-              placeholder="請填寫連結"
-              style="width: 100%"
-            />
-          </div>
+          <ng-container *ngIf="caseStatusDialog === '10'">
+            <div class="field col-12 md:col-3">
+              <label for>歸檔編碼</label>
+              <p-dropdown
+                [options]="cities"
+                [(ngModel)]="selectedDrop"
+                placeholder="請選公司號"
+                [showClear]="true"
+              ></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-3">
+              <label style="visibility: hidden">歸檔編碼</label>
+              <p-dropdown
+                [options]="cities"
+                [(ngModel)]="selectedDrop"
+                placeholder="請選大分類"
+                [showClear]="true"
+              ></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-3">
+              <label style="visibility: hidden">歸檔編碼</label>
+              <p-dropdown
+                [options]="cities"
+                [(ngModel)]="selectedDrop"
+                placeholder="請選中分類"
+                [showClear]="true"
+              ></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-3">
+              <label style="visibility: hidden">歸檔編碼</label>
+              <p-dropdown
+                [options]="cities"
+                [(ngModel)]="selectedDrop"
+                placeholder="請選流水號"
+                [showClear]="true"
+              ></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-6">
+              <label for>簽約日</label>
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="searchFields.contractObject"
+                [maxlength]="50"
+              />
+            </div>
+            <div class="field col-12 md:col-6"></div>
+            <div class="field col-12 md:col-6">
+              <label for>到期日</label>
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="searchFields.contractObject"
+                [maxlength]="50"
+              />
+            </div>
+            <div class="field col-12 md:col-6">
+              <label style="visibility: hidden">到期日</label>
+              <p-dropdown
+                [options]="cities"
+                [(ngModel)]="selectedDrop"
+                placeholder="請選通知對象"
+                [showClear]="true"
+              ></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-6">
+              <label for>驗收日</label>
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="searchFields.contractObject"
+                [maxlength]="50"
+              />
+            </div>
+            <div class="field col-12 md:col-6">
+              <label style="visibility: hidden">驗收日</label>
+              <p-dropdown
+                [options]="cities"
+                [(ngModel)]="selectedDrop"
+                placeholder="請選通知對象"
+                [showClear]="true"
+              ></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-6">
+              <label for>付款日</label>
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="searchFields.contractObject"
+                [maxlength]="50"
+              />
+            </div>
+            <div class="field col-12 md:col-6">
+              <label style="visibility: hidden">付款日</label>
+              <p-dropdown
+                [options]="cities"
+                [(ngModel)]="selectedDrop"
+                placeholder="請選通知對象"
+                [showClear]="true"
+              ></p-dropdown>
+            </div>
+          </ng-container>
         </div>
-        <h6>簡介</h6>
-        <textarea
-          rows="5"
-          placeholder=""
-          pInputTextarea
-          class="p-inputtextarea p-inputtext p-component p-element"
-          style="width: 100%"
-        ></textarea>
         <ng-template pTemplate="footer">
           <button
             pButton
@@ -78,161 +260,6 @@
           <button pButton (click)="submit()" label="確定送出"></button>
         </ng-template>
       </p-dialog>
-      <p-dialog
-        header="新增/編輯"
-        [(visible)]="display2"
-        [modal]="true"
-        showEffect="fade"
-        [style]="{ width: '90vw' }"
-        [breakpoints]="{ '960px': '75vw' }"
-      >
-        <div class="grid formgrid">
-          <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-            <h6>分類</h6>
-            <p-dropdown
-              [options]="cities"
-              [(ngModel)]="selectedDrop"
-              placeholder="請選擇分類"
-              [showClear]="true"
-            ></p-dropdown>
-          </div>
-        </div>
-        <div class="grid formgrid">
-          <div class="col-12 mt-4 mb-2">
-            <h6>名稱</h6>
-            <input
-              type="text"
-              pInputText
-              placeholder="請填寫名稱"
-              style="width: 100%"
-            />
-          </div>
-        </div>
-        <div class="grid formgrid">
-          <div class="col-12 mt-4 mb-2">
-            <h6>連結</h6>
-            <input
-              type="text"
-              pInputText
-              placeholder="請填寫連結"
-              style="width: 100%"
-            />
-          </div>
-        </div>
-        <ng-template pTemplate="footer">
-          <button
-            pButton
-            (click)="display2 = false"
-            label="離開"
-            class="p-button-outlined"
-          ></button>
-          <button pButton (click)="submit()" label="確定送出"></button>
-        </ng-template>
-      </p-dialog>
-      <div class="text-right">
-        <button
-          (click)="addData()"
-          pButton
-          icon="pi pi-plus"
-          label="新增"
-          style="width: auto"
-        ></button>
-      </div>
-      <p-tabView orientation="left" (onChange)="handleChange($event)">
-        <p-tabPanel header="影音社群" class="line-height-3 m-0">
-          <p-dataView
-            #dv
-            [value]="list"
-            [paginator]="true"
-            [rows]="9"
-            filterBy="name"
-            layout="list"
-          >
-            <ng-template let-list pTemplate="listItem">
-              <div class="col-12">
-                <div
-                  class="flex flex-column md:flex-row align-items-center p-3 w-full"
-                >
-                  <img
-                    [src]="'assets/demo/images/product/' + list.image"
-                    [alt]="list.name"
-                    class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5"
-                  />
-                  <div class="flex-1 text-center md:text-left">
-                    <div class="font-bold text-2xl">{{ list.name }}</div>
-                    <!-- <div class="mb-3">{{ list.description }}</div> -->
-                  </div>
-                  <div
-                    class="flex flex-row justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0"
-                  >
-                    <button
-                      type="text"
-                      (click)="confirm1()"
-                      pButton
-                      icon="pi pi-trash"
-                      label="刪除"
-                      class="p-button-danger"
-                      style="width: auto; margin-right: 0.5rem"
-                    ></button>
-                    <button
-                      type="text"
-                      (click)="display = true"
-                      pButton
-                      icon="pi pi-pencil"
-                      label="編輯"
-                      style="width: auto"
-                    ></button>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-          </p-dataView>
-        </p-tabPanel>
-        <p-tabPanel header="數位理財" class="line-height-3 m-0">
-          <p-table
-            [value]="externalList"
-            [paginator]="true"
-            [rows]="5"
-            responsiveLayout="scroll"
-          >
-            <ng-template pTemplate="header">
-              <tr>
-                <!-- <th>Image</th> -->
-                <th pColumn="name">名稱</th>
-                <th>操作</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-product>
-              <tr>
-                <td style="width: 70%; min-width: 7rem">{{ product.name }}</td>
-                <td style="width: 30%">
-                  <div
-                    class="flex flex-row justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0"
-                  >
-                    <button
-                      type="text"
-                      (click)="confirm1()"
-                      pButton
-                      icon="pi pi-trash"
-                      label="刪除"
-                      class="p-button-danger"
-                      style="width: auto; margin-right: 0.5rem"
-                    ></button>
-                    <button
-                      type="text"
-                      (click)="display2 = true"
-                      pButton
-                      icon="pi pi-pencil"
-                      label="編輯"
-                      style="width: auto"
-                    ></button>
-                  </div>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
-        </p-tabPanel>
-      </p-tabView>
     </div>
   </div>
 </div>

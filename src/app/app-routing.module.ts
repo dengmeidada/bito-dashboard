@@ -7,10 +7,17 @@ import { AppLayoutComponent } from './layout/app.layout.component';
   imports: [
     RouterModule.forRoot(
       [
+        // {
+        //   path: '',
+        //   redirectTo: 'backstage',
+        //   pathMatch: 'full',
+        // },
         {
-          path: '',
-          redirectTo: 'backstage',
-          pathMatch: 'full',
+          path: 'login',
+          loadChildren: () =>
+            import('./demo/components/auth/login/login.module').then(
+              (m) => m.LoginModule
+            ),
         },
         {
           path: 'backstage',
@@ -57,6 +64,11 @@ import { AppLayoutComponent } from './layout/app.layout.component';
                 import('./demo/components/pages/pages.module').then(
                   (m) => m.PagesModule
                 ),
+            },
+            {
+              path: 'page',
+              loadChildren: () =>
+                import('src/app/page/page.module').then((m) => m.PageModule),
             },
           ],
         },

@@ -30,6 +30,33 @@ interface file {
   providers: [MessageService, ConfirmationService],
 })
 export class ListDemoComponent implements OnInit {
+  selectedState: any;
+  selectedSector: any;
+  selectedApplicants: any;
+
+  SectorDropdownItems = [
+    { name: '部門 1', code: 'Option 1' },
+    { name: '部門 2', code: 'Option 2' },
+    { name: '部門 3', code: 'Option 3' },
+  ];
+
+  applicantsDropdownItems = [
+    { name: '人員 1', code: 'Option 1' },
+    { name: '人員 2', code: 'Option 2' },
+    { name: '人員 3', code: 'Option 3' },
+  ];
+
+  dropdownItems = [
+    { name: 'Option 1', code: 'Option 1' },
+    { name: 'Option 2', code: 'Option 2' },
+    { name: 'Option 3', code: 'Option 3' },
+  ];
+
+  value1: any;
+  value2: any;
+
+  product: Product = {};
+
   @ViewChild('fileUploadData') fileUploadData: any;
   fileUpload: file = {
     size: '',

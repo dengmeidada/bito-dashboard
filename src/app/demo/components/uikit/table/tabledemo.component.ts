@@ -6,6 +6,7 @@ import { Product } from 'src/app/demo/api/product';
 import { CustomerService } from 'src/app/demo/service/customer.service';
 import { ProductService } from 'src/app/demo/service/product.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Router } from '@angular/router';
 
 interface expandedRows {
   [key: string]: boolean;
@@ -35,10 +36,18 @@ export class TableDemoComponent implements OnInit {
     {
       id: '',
       code: '',
+      grade: '',
+      department: '',
       name: '',
-      description: '',
-      image: '',
-      category: '',
+      contractName: '',
+      contractType: '',
+      TaxContractAmount: '',
+      caseStatusName: '',
+      caseStatus: '',
+      caseDate: '',
+      archiveCode: '',
+      principal: '',
+      updateTime: '',
     },
   ];
   externalList = [
@@ -100,32 +109,64 @@ export class TableDemoComponent implements OnInit {
 
   loading: boolean = true;
 
+  /** 搜尋表單欄位名稱 */
+  searchFields = {
+    dateSelect: null,
+    billingRequirements: '',
+    contractNo: '',
+    SectorDropdownItems: '',
+    applicantsDropdownItems: '',
+    contractObject: '',
+    contractType: '',
+    caseStatus: '',
+  };
+
+  dialogTitle = '';
+  caseStatusDialog = '';
+
   @ViewChild('filter') filter!: ElementRef;
 
   constructor(
     private customerService: CustomerService,
     private productService: ProductService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    public router: Router
   ) {}
 
   ngOnInit() {
     this.list = [
       {
-        id: '1000',
+        id: 'A1111017001',
         code: 'f230fh0g3',
-        name: '王富貴',
-        description: 'Product Description',
-        image: 'bamboo-watch.jpg',
-        category: 'Accessories',
+        grade: '急',
+        department: '執行長室',
+        name: '黃相云 Rebecca Huang',
+        contractName: '○○○合作協議',
+        contractType: '合作',
+        TaxContractAmount: '無',
+        caseStatusName: '可申請確認',
+        caseStatus: '15',
+        caseDate: '2工作天',
+        archiveCode: 'A222017001',
+        principal: '法遵部 | 黃曉薇 Vera Huang',
+        updateTime: '2022/11/10 09:00:00',
       },
       {
-        id: '1001',
+        id: 'A1111017002',
         code: 'nvklal433',
-        name: '張美女',
-        description: 'Product Description',
-        image: 'black-watch.jpg',
-        category: 'Accessories',
+        grade: '普',
+        department: '執行長室',
+        name: '○○○系統設計契約',
+        contractName: '○○○合作協議',
+        contractType: '廠商',
+        TaxContractAmount: '無',
+        caseStatusName: '待歸檔',
+        caseStatus: '10',
+        caseDate: '1工作天',
+        archiveCode: 'A222017002',
+        principal: '執行長室 | 黃相云 Rebecca Huang',
+        updateTime: '2022/11/10 13:05:50',
       },
     ];
     this.externalList = [
@@ -203,6 +244,17 @@ export class TableDemoComponent implements OnInit {
       { label: 'Renewal', value: 'renewal' },
       { label: 'Proposal', value: 'proposal' },
     ];
+  }
+
+  caseStatusClick(caseStatus: string): void {
+    console.log('caseStatus', caseStatus);
+    this.caseStatusDialog = caseStatus;
+    this.display = true;
+    if (caseStatus === '10') {
+      this.dialogTitle = '歸檔處理';
+    } else if (caseStatus === '15') {
+      this.dialogTitle = '可申請確認';
+    }
   }
 
   onSort() {

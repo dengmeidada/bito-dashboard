@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PanelsDemoComponent } from './panelsdemo.component';
 import { PanelsDemoRoutingModule } from './panelsdemo-routing.module';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -21,6 +21,9 @@ import { RatingModule } from 'primeng/rating';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ListDemoRoutingModule } from '../list/listdemo-routing.module';
+import { TableModule } from 'primeng/table';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   imports: [
@@ -45,6 +48,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     DialogModule,
     FileUploadModule,
     CKEditorModule,
+    ListDemoRoutingModule,
+    TableModule,
+    ReactiveFormsModule,
+    CalendarModule,
   ],
   declarations: [PanelsDemoComponent],
 })

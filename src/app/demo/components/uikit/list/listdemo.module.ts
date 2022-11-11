@@ -13,6 +13,9 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CalendarModule } from 'primeng/calendar';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   imports: [
@@ -29,6 +32,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     DialogModule,
     FileUploadModule,
     CKEditorModule,
+    CalendarModule,
+    RadioButtonModule,
+    InputTextareaModule,
   ],
   declarations: [ListDemoComponent],
 })

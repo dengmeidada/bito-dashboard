@@ -6,20 +6,213 @@ import {
   SelectItem,
 } from 'primeng/api';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ProductService } from 'src/app/demo/service/product.service';
+import { DataView } from 'primeng/dataview';
+import { Table } from 'primeng/table';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+interface list {
+  id: string;
+  name: string;
+  code: string;
+  blockType: string;
+  articleClassification: string;
+  productCategory: string;
+  content: string;
+  file: file;
+  sortOrder: string;
+  createdTime: string;
+}
+
+interface file {
+  size: string;
+  name: string;
+  image: string;
+}
+
+interface OptionItem {
+  name: string;
+  code: string;
+}
 
 @Component({
   templateUrl: './panelsdemo.component.html',
   providers: [MessageService, ConfirmationService],
 })
 export class PanelsDemoComponent implements OnInit {
+  citiesOption: OptionItem[] = [];
+  value1 = '';
+  value2 = '';
+  /** 搜尋表單 */
+  searchForm?: FormGroup;
+  /** 搜尋表單建立器 */
+  searchFormBuilder = {
+    insuranceCompany: null,
+    policyNo: '',
+    contractNo: '',
+    plateNo: '',
+  };
+  /** 搜尋表單欄位名稱 */
+  searchFields = {
+    dateSelect: {
+      label: '',
+      value: '',
+    },
+    selectedCity1: {
+      name: '',
+      code: '',
+    },
+    billingRequirements: {
+      label: '',
+      value: '',
+    },
+    contractNo: {
+      label: '',
+      value: '',
+    },
+    SectorDropdownItems: {
+      label: '',
+      value: '',
+    },
+    applicantsDropdownItems: {
+      label: '',
+      value: '',
+    },
+    contractObject: '',
+    contractType: {
+      label: '',
+      value: '',
+    },
+    caseStatus: {
+      label: '',
+      value: '',
+    },
+  };
+
+  optionData = {
+    dateSelect: {
+      options: [
+        {
+          type: '1',
+          label: '今日',
+        },
+      ],
+    },
+    billingRequirements: {
+      options: [
+        {
+          type: 'C',
+          label: '法務諮詢',
+        },
+        {
+          type: 'A',
+          label: '合約審核',
+        },
+        {
+          type: 'S',
+          label: '合約特件',
+        },
+      ],
+    },
+    caseStatus: {
+      options: [
+        {
+          type: '1',
+          label: '新進件',
+        },
+        {
+          type: '2',
+          label: '待補正',
+        },
+        {
+          type: '3',
+          label: '待分配',
+        },
+        {
+          type: '4',
+          label: '待審核',
+        },
+        {
+          type: '5',
+          label: '可終審',
+        },
+        {
+          type: '6',
+          label: '待終確',
+        },
+        {
+          type: '7',
+          label: '待終確',
+        },
+        {
+          type: '8',
+          label: '待比對',
+        },
+        {
+          type: '9',
+          label: '待用印',
+        },
+        {
+          type: '10',
+          label: '待歸檔',
+        },
+        {
+          type: '11',
+          label: '已歸檔',
+        },
+        {
+          type: '12',
+          label: '到期通知',
+        },
+        {
+          type: '13',
+          label: '待驗收',
+        },
+        {
+          type: '14',
+          label: '待付款',
+        },
+      ],
+    },
+    contractType: {
+      options: [
+        {
+          type: '1',
+          label: '廠商合約',
+        },
+      ],
+    },
+    SectorDropdownItems: {
+      options: [
+        { label: '部門 1', code: 'Option 1' },
+        { label: '部門 2', code: 'Option 2' },
+        { label: '部門 3', code: 'Option 3' },
+      ],
+    },
+    applicantsDropdownItems: {
+      options: [
+        { label: '人員 1', code: 'Option 1' },
+        { label: '人員 2', code: 'Option 2' },
+        { label: '人員 3', code: 'Option 3' },
+      ],
+    },
+  };
   list = [
     {
       id: '',
       code: '',
+      grade: '',
+      department: '',
       name: '',
-      description: '',
-      image: '',
-      category: '',
+      contractName: '',
+      contractType: '',
+      TaxContractAmount: '',
+      caseStatusName: '',
+      caseStatus: '',
+      caseDate: '',
+      archiveCode: '',
+      principal: '',
+      updateTime: '',
     },
   ];
   externalList = [
@@ -49,28 +242,69 @@ export class PanelsDemoComponent implements OnInit {
 
   cardMenu: MenuItem[] = [];
 
+  blockOptions: SelectItem[] = [];
+  selectTableType = '1';
+
+  productList: list[] = [];
+
+  display2 = false;
+
+  dialogTitle = '';
+  caseStatusDialog = '';
+
   constructor(
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private productService: ProductService,
+    public router: Router
   ) {}
 
   ngOnInit() {
+    this.citiesOption = [
+      { name: 'New York', code: 'NY' },
+      { name: 'Rome', code: 'RM' },
+      { name: 'London', code: 'LDN' },
+      { name: 'Istanbul', code: 'IST' },
+      { name: 'Paris', code: 'PRS' },
+    ];
+    this.getProducts1();
+    this.blockOptions = [
+      { label: '產品與服務', value: '1' },
+      { label: '投資觀點', value: '2' },
+    ];
+
     this.list = [
       {
-        id: '1000',
+        id: 'A1111017001',
         code: 'f230fh0g3',
-        name: '王富貴',
-        description: 'Product Description',
-        image: 'bamboo-watch.jpg',
-        category: 'Accessories',
+        grade: '急',
+        department: '執行長室',
+        name: '黃相云 Rebecca Huang',
+        contractName: '○○○合作協議',
+        contractType: '合作',
+        TaxContractAmount: '無',
+        caseStatusName: '可申請確認',
+        caseStatus: '15',
+        caseDate: '2工作天',
+        archiveCode: 'A222017001',
+        principal: '法遵部 | 黃曉薇 Vera Huang',
+        updateTime: '2022/11/10 09:00:00',
       },
       {
-        id: '1001',
+        id: 'A1111017002',
         code: 'nvklal433',
-        name: '張美女',
-        description: 'Product Description',
-        image: 'black-watch.jpg',
-        category: 'Accessories',
+        grade: '普',
+        department: '執行長室',
+        name: '○○○系統設計契約',
+        contractName: '○○○合作協議',
+        contractType: '廠商',
+        TaxContractAmount: '無',
+        caseStatusName: '待歸檔',
+        caseStatus: '10',
+        caseDate: '1工作天',
+        archiveCode: 'A222017002',
+        principal: '執行長室 | 黃相云 Rebecca Huang',
+        updateTime: '2022/11/10 13:05:50',
       },
     ];
     this.externalList = [
@@ -124,6 +358,38 @@ export class PanelsDemoComponent implements OnInit {
     ];
   }
 
+  onBlockChange(event: any) {
+    const value = event.value;
+    console.log('val-', value);
+    // if (value === '1') {
+    //   this.getProducts1();
+    // } else if (value === '2') {
+    //   this.getProducts2();
+    // }
+  }
+
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
+  caseStatusClick(caseStatus: string): void {
+    console.log('caseStatus', caseStatus);
+    this.caseStatusDialog = caseStatus;
+    this.display = true;
+    if (caseStatus === '10') {
+      this.dialogTitle = '歸檔處理';
+    } else if (caseStatus === '15') {
+      this.dialogTitle = '可申請確認';
+    }
+  }
+
+  getProducts1(): void {
+    this.productService.getBlockProducts().then((data) => {
+      // this.list = data;
+      this.productList = data;
+    });
+  }
+
   // onUpload(event: any) {
   //   for (const file of event.files) {
   //     this.uploadedFiles.push(file);
@@ -145,6 +411,5 @@ export class PanelsDemoComponent implements OnInit {
 
   submit() {
     this.display = false;
-    console.log('htmlData', this.htmlData);
   }
 }
