@@ -1,5 +1,5 @@
 <div class="layout-topbar justify-content-between">
-  <a class="layout-topbar-logo" routerLink="">
+  <a class="layout-topbar-logo" (click)="router.navigate(['/backstage'])">
     <!-- <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="logo"> -->
     <span>Bito</span>
   </a>
@@ -26,6 +26,13 @@
       <span>Profile</span>
     </button>
     <button
+      class="p-link layout-topbar-button"
+      [routerLink]="'/backstage/documentation'"
+    >
+      <i class="pi pi-cog"></i>
+      <span>Settings</span>
+    </button>
+    <button
       #menubutton
       class="p-link layout-menu-button layout-topbar-button"
       (click)="layoutService.onMenuToggle()"
@@ -33,6 +40,5 @@
       <i class="pi pi-bars"></i>
     </button>
   </div>
-
   <!-- </div> -->
 </div>

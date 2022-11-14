@@ -70,6 +70,13 @@ import { AppLayoutComponent } from './layout/app.layout.component';
               loadChildren: () =>
                 import('src/app/page/page.module').then((m) => m.PageModule),
             },
+            {
+              path: 'documentation',
+              loadChildren: () =>
+                import(
+                  './demo/components/documentation/documentation.module'
+                ).then((m) => m.DocumentationModule),
+            },
           ],
         },
         {
@@ -86,6 +93,7 @@ import { AppLayoutComponent } from './layout/app.layout.component';
               (m) => m.LandingModule
             ),
         },
+
         // { path: 'pages/notfound', component: NotfoundComponent },
         // { path: '**', redirectTo: 'pages/notfound' },
       ],

@@ -50,11 +50,14 @@ export class TableDemoComponent implements OnInit {
       updateTime: '',
     },
   ];
-  externalList = [
+  caseHistoryList = [
     {
       id: '',
       code: '',
       name: '',
+      updateTime: '',
+      action: '',
+      file: '',
       description: '',
       image: '',
       category: '',
@@ -169,19 +172,25 @@ export class TableDemoComponent implements OnInit {
         updateTime: '2022/11/10 13:05:50',
       },
     ];
-    this.externalList = [
+    this.caseHistoryList = [
       {
         id: '1003',
-        code: '244wgerg2',
-        name: '王曉明',
+        code: 'A1111017001',
+        name: '執行長室 | 黃相云 Rebecca Huang',
+        updateTime: '2022/11/09 09:27:39',
+        action: '送審',
+        file: 'V1.pdf',
         description: 'Product Description',
         image: 'blue-t-shirt.jpg',
         category: 'Accessories',
       },
       {
         id: '1004',
-        code: 'h456wer53',
-        name: '陳美美',
+        code: 'A1111017002',
+        name: '法遵部 | 鄭學豐 Kevin Cheng',
+        updateTime: '2022/11/14 15:18:43',
+        action: '分配',
+        file: 'V2.pdf',
         description: 'Product Description',
         image: 'bracelet.jpg',
         category: 'Accessories',
