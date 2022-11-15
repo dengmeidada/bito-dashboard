@@ -12,17 +12,18 @@ import { RouterModule } from '@angular/router';
           ),
       },
       {
-        path: 'list',
+        path: 'newOncomingBill',
         loadChildren: () =>
           import('./list/listdemo.module').then((m) => m.ListDemoModule),
+        // data: { bc: '新進件開單建檔區' },
       },
       {
-        path: 'expertList',
+        path: 'IntegratedQuery',
         loadChildren: () =>
           import('./panels/panelsdemo.module').then((m) => m.PanelsDemoModule),
       },
       {
-        path: 'externalLinkList',
+        path: 'billingList',
         loadChildren: () =>
           import('./table/tabledemo.module').then((m) => m.TableDemoModule),
       },

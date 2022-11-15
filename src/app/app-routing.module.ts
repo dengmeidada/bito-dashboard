@@ -30,13 +30,13 @@ import { AppLayoutComponent } from './layout/app.layout.component';
                   (m) => m.DashboardModule
                 ),
             },
-            {
-              path: 'product',
-              loadChildren: () =>
-                import('./demo/components/uikit/uikit.module').then(
-                  (m) => m.UikitModule
-                ),
-            },
+            // {
+            //   path: 'product',
+            //   loadChildren: () =>
+            //     import('./demo/components/uikit/uikit.module').then(
+            //       (m) => m.UikitModule
+            //     ),
+            // },
             {
               path: 'systemParams',
               loadChildren: () =>
@@ -44,19 +44,20 @@ import { AppLayoutComponent } from './layout/app.layout.component';
                   (m) => m.UikitModule
                 ),
             },
+            // {
+            //   path: 'expert',
+            //   loadChildren: () =>
+            //     import('./demo/components/uikit/uikit.module').then(
+            //       (m) => m.UikitModule
+            //     ),
+            // },
             {
-              path: 'expert',
+              path: 'legalConsultation',
               loadChildren: () =>
                 import('./demo/components/uikit/uikit.module').then(
                   (m) => m.UikitModule
                 ),
-            },
-            {
-              path: 'externalLink',
-              loadChildren: () =>
-                import('./demo/components/uikit/uikit.module').then(
-                  (m) => m.UikitModule
-                ),
+              // data: { bc: '法律諮詢' },
             },
             {
               path: 'pages',
@@ -71,11 +72,12 @@ import { AppLayoutComponent } from './layout/app.layout.component';
                 import('src/app/page/page.module').then((m) => m.PageModule),
             },
             {
-              path: 'documentation',
+              path: 'userEditor',
               loadChildren: () =>
                 import(
                   './demo/components/documentation/documentation.module'
                 ).then((m) => m.DocumentationModule),
+              data: { bc: '個人資料' },
             },
           ],
         },

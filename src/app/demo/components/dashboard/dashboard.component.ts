@@ -67,6 +67,79 @@ export class DashboardComponent implements OnInit, OnDestroy {
   chartOptions: any;
 
   subscription!: Subscription;
+  legalProcessList = [
+    {
+      type: '1',
+      label: '初審',
+      count: 0,
+    },
+    {
+      type: '2',
+      label: '複審',
+      count: 1,
+    },
+    {
+      type: '3',
+      label: '回覆意見',
+      count: 2,
+    },
+  ];
+
+  processList = [
+    {
+      type: '1',
+      label: '開單',
+      count: 2,
+    },
+    {
+      type: '2',
+      label: '初審',
+      count: 0,
+    },
+    {
+      type: '3',
+      label: '複審',
+      count: 1,
+    },
+    {
+      type: '4',
+      label: '可申請確認',
+      count: 2,
+    },
+    {
+      type: '5',
+      label: '終審',
+      count: 6,
+    },
+    {
+      type: '6',
+      label: '比對',
+      count: 1,
+    },
+    {
+      type: '7',
+      label: '用印',
+      count: 2,
+    },
+    {
+      type: '8',
+      label: '歸檔',
+      count: 5,
+    },
+  ];
+
+  SpecialProcessList = [
+    {
+      type: '1',
+      label: '開單',
+      count: 0,
+    },
+    {
+      type: '2',
+      label: '歸檔',
+      count: 1,
+    },
+  ];
 
   constructor(
     private productService: ProductService,

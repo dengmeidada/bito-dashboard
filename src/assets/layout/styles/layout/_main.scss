@@ -26,3 +26,13 @@ a {
 .layout-wrapper {
     min-height: 100vh;
 }
+
+.panel-container {
+  .p-panel .p-panel-header {
+    background: #82AF6F;
+    background: #FFC657;
+    background: #609af8;
+    color: var(--yellow-900);
+    color: #fff;
+  }
+}

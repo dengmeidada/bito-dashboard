@@ -33,6 +33,11 @@ export class ListDemoComponent implements OnInit {
   selectedState: any;
   selectedSector: any;
   selectedApplicants: any;
+  contractSubject: any;
+  contractType: any;
+  contractAmount: any;
+  executiveUnit: any;
+  executiveStaff: any;
 
   SectorDropdownItems = [
     { name: '部門 1', code: 'Option 1' },
@@ -44,6 +49,35 @@ export class ListDemoComponent implements OnInit {
     { name: '人員 1', code: 'Option 1' },
     { name: '人員 2', code: 'Option 2' },
     { name: '人員 3', code: 'Option 3' },
+  ];
+
+  contractSubjectItems = [
+    { name: '分公司', code: 'Option 1' },
+    { name: '幣託', code: 'Option 2' },
+    { name: '泓科', code: 'Option 3' },
+  ];
+
+  contractTypeItems = [
+    { name: '廠商合約', code: 'Option 1' },
+    { name: '客戶合約', code: 'Option 2' },
+    { name: '保密 NDA', code: 'Option 3' },
+    { name: '合作 MOU', code: 'Option 4' },
+    { name: '其他', code: 'Option 5' },
+  ];
+
+  contractAmountItems = [
+    { name: '未定', code: 'Option 1' },
+    { name: '無', code: 'Option 2' },
+  ];
+
+  executiveUnitItems = [
+    { name: '執行單位 1', code: 'Option 1' },
+    { name: '執行單位 2', code: 'Option 2' },
+  ];
+
+  executiveStaffItems = [
+    { name: '執行人員 1', code: 'Option 1' },
+    { name: '執行人員 2', code: 'Option 2' },
   ];
 
   dropdownItems = [

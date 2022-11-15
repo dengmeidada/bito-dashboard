@@ -1,7 +1,7 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <h5>編輯進件開單-基本資料</h5>
+      <h2>編輯進件開單-基本資料</h2>
       <div class="grid p-fluid">
         <div class="col-12">
           <div class="p-fluid p-formgrid grid">
@@ -16,6 +16,8 @@
                 [options]="SectorDropdownItems"
                 optionLabel="name"
                 [(ngModel)]="selectedSector"
+                placeholder="請選擇申請部門"
+                [showClear]="true"
               ></p-dropdown>
             </div>
             <div class="field col-12 md:col-6">
@@ -24,14 +26,18 @@
                 [options]="applicantsDropdownItems"
                 optionLabel="name"
                 [(ngModel)]="selectedApplicants"
+                placeholder="請選擇申請人員"
+                [showClear]="true"
               ></p-dropdown>
             </div>
             <div class="field col-12 md:col-6">
               <label htmlFor="contractSubject1">簽約主體我方*</label>
               <p-dropdown
-                [options]="applicantsDropdownItems"
+                [options]="contractSubjectItems"
                 optionLabel="name"
-                [(ngModel)]="selectedApplicants"
+                [(ngModel)]="contractSubject"
+                placeholder="請選擇簽約主體"
+                [showClear]="true"
               ></p-dropdown>
             </div>
             <div class="field col-12 md:col-6">
@@ -54,12 +60,24 @@
               <label htmlFor="contractSubject2">公司地址</label>
               <input pInputText id="contractSubject2" type="text" />
             </div>
-            <div class="field col-12 md:col-12">
-              <label htmlFor="contractSubject2">合約名稱</label>
+            <div class="field col-12 md:col-6">
+              <label htmlFor="contractSubject2">合約名稱*</label>
               <input pInputText id="contractSubject2" type="text" />
             </div>
             <div class="field col-12 md:col-6">
-              <label htmlFor="contractSubject2">合約金額(含稅)</label>
+              <label htmlFor="contractSubject1" style="visibility: hidden"
+                >合約類型</label
+              >
+              <p-dropdown
+                [options]="contractTypeItems"
+                optionLabel="name"
+                [(ngModel)]="contractType"
+                placeholder="請選擇合約類型"
+                [showClear]="true"
+              ></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-6">
+              <label htmlFor="contractSubject2">合約金額(含稅)*</label>
               <input pInputText id="contractSubject2" type="text" />
             </div>
             <div class="field col-12 md:col-6">
@@ -67,9 +85,11 @@
                 >合約金額(含稅)</label
               >
               <p-dropdown
-                [options]="applicantsDropdownItems"
+                [options]="contractAmountItems"
                 optionLabel="name"
-                [(ngModel)]="selectedApplicants"
+                [(ngModel)]="contractAmount"
+                placeholder="請選擇合約金額"
+                [showClear]="true"
               ></p-dropdown>
             </div>
             <div class="field col-12 md:col-6">
@@ -78,6 +98,7 @@
                 inputId="calendar1"
                 [(ngModel)]="value1"
                 [showIcon]="true"
+                dateFormat="yy/mm/dd"
               ></p-calendar>
             </div>
             <div class="field col-12 md:col-6">
@@ -86,6 +107,7 @@
                 inputId="calendar2"
                 [(ngModel)]="value2"
                 [showIcon]="true"
+                dateFormat="yy/mm/dd"
               ></p-calendar>
             </div>
             <div class="field col-12 md:col-4">
@@ -126,22 +148,26 @@
             <div class="field col-12 md:col-6">
               <label htmlFor="application-sector">執行單位</label>
               <p-dropdown
-                [options]="applicantsDropdownItems"
+                [options]="executiveUnitItems"
                 optionLabel="name"
-                [(ngModel)]="selectedApplicants"
+                [(ngModel)]="executiveUnit"
+                placeholder="請選擇執行單位"
+                [showClear]="true"
               ></p-dropdown>
             </div>
             <div class="field col-12 md:col-6">
               <label htmlFor="contractSubject1">執行人員</label>
               <p-dropdown
-                [options]="applicantsDropdownItems"
+                [options]="executiveStaffItems"
                 optionLabel="name"
-                [(ngModel)]="selectedApplicants"
+                [(ngModel)]="executiveStaff"
+                placeholder="請選擇執行人員"
+                [showClear]="true"
               ></p-dropdown>
             </div>
 
             <div class="field col-12 md:col-12">
-              <label for="description">送審備注</label>
+              <label for="description">送審備註</label>
               <textarea
                 id="description"
                 pInputTextarea
@@ -152,7 +178,7 @@
               ></textarea>
             </div>
             <div class="col-12">
-              <h6>上傳檔案</h6>
+              <h6>附件上傳*</h6>
               <p-fileUpload
                 #fileUploadData
                 name="demo[]"

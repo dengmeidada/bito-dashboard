@@ -13,6 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     InputTextModule,
     ToastModule,
     InputSwitchModule,
+    PanelModule,
   ],
   declarations: [DashboardComponent],
 })

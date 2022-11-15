@@ -30,8 +30,13 @@ export class BasicInformationComponent implements OnInit {
   constructor() {}
 
   selectedState: any;
-  selectedSector: any;
+  selectedSector: any = { name: '部門 1', code: 'Option 1' };
   selectedApplicants: any;
+  contractSubject: any;
+  contractType: any;
+  contractAmount: any;
+  executiveUnit: any;
+  executiveStaff: any;
 
   SectorDropdownItems = [
     { name: '部門 1', code: 'Option 1' },
@@ -45,10 +50,33 @@ export class BasicInformationComponent implements OnInit {
     { name: '人員 3', code: 'Option 3' },
   ];
 
-  dropdownItems = [
-    { name: 'Option 1', code: 'Option 1' },
-    { name: 'Option 2', code: 'Option 2' },
-    { name: 'Option 3', code: 'Option 3' },
+  contractSubjectItems = [
+    { name: '分公司', code: 'Option 1' },
+    { name: '幣託', code: 'Option 2' },
+    { name: '泓科', code: 'Option 3' },
+  ];
+
+  contractTypeItems = [
+    { name: '廠商合約', code: 'Option 1' },
+    { name: '客戶合約', code: 'Option 2' },
+    { name: '保密 NDA', code: 'Option 3' },
+    { name: '合作 MOU', code: 'Option 4' },
+    { name: '其他', code: 'Option 5' },
+  ];
+
+  contractAmountItems = [
+    { name: '未定', code: 'Option 1' },
+    { name: '無', code: 'Option 2' },
+  ];
+
+  executiveUnitItems = [
+    { name: '執行單位 1', code: 'Option 1' },
+    { name: '執行單位 2', code: 'Option 2' },
+  ];
+
+  executiveStaffItems = [
+    { name: '執行人員 1', code: 'Option 1' },
+    { name: '執行人員 2', code: 'Option 2' },
   ];
 
   value1: any;
