@@ -6,7 +6,8 @@
     top: 0;
     width: 100%;
     padding: 0 2rem;
-    background-color: var(--primary-color);
+    // background-color: var(--primary-color);
+    background-color: #171969;
     transition: left $transitionDuration;
     display: flex;
     align-items: center;
@@ -97,6 +98,11 @@
   width: 30px;
   border-radius: 50%;
 }
+
+.layout-topbar-logo-img {
+  // filter: brightness(100);
+}
+
 
 @media (max-width: 991px) {
     .layout-topbar {
